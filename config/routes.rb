@@ -15,9 +15,9 @@ Rails.application.routes.draw do
   
   resources :chats
   resources :messages
-  resources :users, only: [:index, :show, :new, :create]
-  resources :messages, only: [:index, :show, :new, :create]
-  resources :chats, only: [:index, :show, :new, :create]
+  resources :users, only: [:index, :show, :new, :create, :edit, :update]
+  resources :messages, only: [:index, :show, :new, :create, :edit, :update]
+  resources :chats, only: [:index, :show, :new, :create, :edit, :update]
   
   get "up" => "rails/health#show", as: :rails_health_check
 end

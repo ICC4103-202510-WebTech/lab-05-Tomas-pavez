@@ -7,13 +7,18 @@
 </div>
 
 <table>
-
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
   <tbody>
     <% @messages.each do |message| %>
       <tr>
         <td><%= link_to "Message #{message.id}", message_path(message) %></td>
+        <td><%= link_to "Edit", edit_message_path(message) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-

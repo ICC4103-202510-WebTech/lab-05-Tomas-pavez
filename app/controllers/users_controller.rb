@@ -1,33 +1,46 @@
 class UsersController < ApplicationController
-
   def index
-    @users = User.all
+    @users = User.all.includes(:messages)
     @user = User.new
   end
 
   def show
     @user = User.find(params[:id])
+    @sent_chats = @user.sent_chats
+    @received_chats = @user.received_chats
+    @messages = @user.messages
   end
 
   def new
-    @user=User.new
+    @user = User.new
   end
 
   def create 
-    @user=User.new user_params
-
+    @user = User.new(user_params)
     if @user.save
       redirect_to user_path(@user)
     else
-      @users=User.all
+      @users = User.all
       render :new
     end
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
 
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to user_path(@user)
+    else
+      render :edit
+    end
+  end
 
   private
+
   def user_params
-  params.require(:user).permit(:first_name, :last_name, :email)
+    params.require(:user).permit(:first_name, :last_name, :email)
   end
-end 
+end

@@ -1,17 +1,17 @@
 <h1>Message form</h1>
 
-<% if message.errors.any? %>
+<% if @message.errors.any? %>
   <div style="color: red; margin-bottom: 15px;">
     <h3>Errors:</h3>
     <ul>
-      <% message.errors.full_messages.each do |msg| %>
+      <% @message.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
 
-<%= form_with model: message, local: true do |form| %>
+<%= form_with model: @message, local: true do |form| %>
   <div>
     <%= form.label :body, "Body" %>
     <%= form.text_field :body, placeholder: "Enter the body message" %>
@@ -19,19 +19,17 @@
 
   <div>
     <%= form.label :chat_id, "Chat ID" %>
-    <%= form.text_field :chat_id, placeholder: "Enter the chat ID" %>
+    <%= form.number_field :chat_id, placeholder: "Enter the chat ID" %>
   </div>
 
   <div>
     <%= form.label :user_id, "User ID" %>
-    <%= form.text_field :user_id, placeholder: "Enter the User ID" %>
+    <%= form.number_field :user_id, placeholder: "Enter the User ID" %>
   </div>
 
   <div>
-    <%= form.submit "Save" %>
+    <%= form.submit @message.new_record? ? "Create Message" : "Update Message" %>
   </div>
 
-  <div>
-    <%= link_to 'Back', messages_path %>
-  </div>
+  <%= link_to 'Back', messages_path %>
 <% end %>

@@ -9,13 +9,17 @@
 <table>
   <thead>
     <tr>
-      <th>Users all</th>
+      <th>User</th>
+      <th>Actions</th>
+      <th>Messages sent</th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to "User #{user.id}", user_path(user) %></td>
+        <td><%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %></td>
+        <td><%= link_to "Edit", edit_user_path(user) %></td>
+        <td><%= user.messages.count %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,4 +1,4 @@
-<h1> Chat form </h1>
+<h1>Chat form</h1>
 
 <% if @chat.errors.any? %>
   <div style="color: red; margin-bottom: 15px;">
@@ -13,17 +13,17 @@
 
 <%= form_with model: @chat, local: true do |form| %>
   <div>
-    <%= form.label :sender_id, "Sender_id" %>
-    <%= form.text_field :sender_id, placeholder: "Enter the sender ID" %>
+    <%= form.label :sender_id, "Sender ID" %>
+    <%= form.number_field :sender_id, placeholder: "Enter the sender ID" %>
   </div>
 
   <div>
-    <%= form.label :receiver_id, "Receiver_id" %>
-    <%= form.text_field :receiver_id, placeholder: "Enter the receiver ID" %>
+    <%= form.label :receiver_id, "Receiver ID" %>
+    <%= form.number_field :receiver_id, placeholder: "Enter the receiver ID" %>
   </div>
 
   <div>
-    <%= form.submit "Save" %>
+    <%= form.submit @chat.new_record? ? "Create Chat" : "Update Chat" %>
   </div>
 
   <%= link_to 'Back', chats_path %>

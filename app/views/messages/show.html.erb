@@ -1,10 +1,10 @@
+<h1>Message ID: <%= @message.id %></h1>
 
-<h1>Message information</h1>
+<p><strong>Content:</strong> <%= @message.body %></p>
+<p><strong>User who sent it:</strong> 
+  <%= @user.first_name %> <%= @user.last_name %> (ID: <%= @user.id %>)
+</p>
+<p><strong>Associated chat:</strong> Chat ID: <%= @chat.id %></p>
 
-<p>ID: <%= @message.id %></p>
-<p>Chat_id: <%= @message.chat_id %></p>
-<p>User_id: <%= @message.user_id %></p>
-<p>Body: <%= @message.body%></p>
-
-
-<%= link_to 'Back', messages_path %>
+<%= link_to "Edit Message", edit_message_path(@message), style: "margin-right: 10px;" %>
+<%= link_to "Back", messages_path %>

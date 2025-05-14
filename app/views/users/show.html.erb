@@ -1,9 +1,26 @@
+<h1><%= @user.first_name %> <%= @user.last_name %></h1>
+<p><strong>Email:</strong> <%= @user.email %></p>
 
-<h1>Personal information</h1>
+<h2>Sent Chats</h2>
+<ul>
+  <% @sent_chats.each do |chat| %>
+    <li>Chat con <%= chat.receiver.first_name %> (ID: <%= chat.id %>)</li>
+  <% end %>
+</ul>
 
-<p>ID: <%= @user.id %></p>
-<p>First_name: <%= @user.first_name %></p>
-<p>Last_name: <%= @user.last_name %></p>
-<p>Email: <%= @user.email %></p>
+<h2>Received Chats</h2>
+<ul>
+  <% @received_chats.each do |chat| %>
+    <li>Chat con <%= chat.sender.first_name %> (ID: <%= chat.id %>)</li>
+  <% end %>
+</ul>
 
-<%= link_to 'Back', users_path %>
+<h2>Send Messages</h2>
+<ul>
+  <% @messages.each do |message| %>
+    <li>En chat ID <%= message.chat_id %>: <%= message.body %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Edit User", edit_user_path(@user), style: "margin-right: 10px;" %>
+<%= link_to "Back", users_path %>
