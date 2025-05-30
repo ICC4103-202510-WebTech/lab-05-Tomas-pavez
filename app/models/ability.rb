@@ -7,7 +7,7 @@ class Ability
     
     can :read, :all
 
-   
+    
     can :create, Message do |message|
       message.chat&.includes_user?(user)
     end
@@ -21,5 +21,6 @@ class Ability
 
     
     can [:update, :destroy], User, id: user.id
-    can :create, User 
+    can :create, User
+  end
 end
