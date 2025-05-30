@@ -4,7 +4,6 @@ class Ability
   def initialize(user)
     return unless user.present?
 
-    
     can :read, :all
 
     
@@ -19,8 +18,7 @@ class Ability
       chat.includes_user?(user)
     end
 
-    
-    can [:update, :destroy], User, id: user.id
+    can [:read, :update, :destroy], User, id: user.id
     can :create, User
   end
 end
