@@ -1,23 +1,16 @@
 Rails.application.routes.draw do
-  get "message/index"
-  get "chat/index"
-  get "user/index"
-  get "message/show"
-  get "chat/show"
-  get "user/show"
-  get "message/new"
-  get "chat/new"
-  get "user/new"
-  get "message/create"
-  get "chat/create"
-  get "user/create"
+  # Devise solo para autenticación
+  devise_for :users
 
-  
-  resources :chats
-  resources :messages
-  resources :users, only: [:index, :show, :new, :create, :edit, :update]
-  resources :messages, only: [:index, :show, :new, :create, :edit, :update]
-  resources :chats, only: [:index, :show, :new, :create, :edit, :update]
-  
+  # Recursos personalizados
+  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :messages, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :chats, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
+  # Página de salud de Rails
   get "up" => "rails/health#show", as: :rails_health_check
+
+  # Página raíz
+  root "chats#index"
 end
+
