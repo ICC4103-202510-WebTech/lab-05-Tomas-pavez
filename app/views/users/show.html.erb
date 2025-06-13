@@ -1,0 +1,105 @@
+<div class="bg-white rounded-lg card-shadow p-6">
+  <!-- Header del usuario -->
+  <div class="flex justify-between items-start mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">
+        👤 <%= @user.first_name %> <%= @user.last_name %>
+      </h1>
+      <p class="text-lg text-gray-600">
+        <strong>Email:</strong> <%= @user.email %>
+      </p>
+    </div>
+  </div>
+
+ 
+  <% if @user == current_user %>
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
+      <strong>This is your profile</strong> - You can edit it freely
+    </div>
+  <% end %>
+
+  
+  <div class="grid md:grid-cols-2 gap-6 mb-8">
+    
+    <div class="bg-gray-50 rounded-lg p-4">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">💬 Sent Chats</h2>
+      <% if @sent_chats.any? %>
+        <ul class="space-y-2">
+          <% @sent_chats.each do |chat| %>
+            <li class="bg-white p-3 rounded border">
+              <%= link_to "Chat with #{chat.receiver.first_name}", chat_path(chat), 
+                  class: "text-blue-600 hover:text-blue-900 hover:underline" %>
+              <span class="text-gray-500 text-sm">(ID: <%= chat.id %>)</span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-gray-500 italic">No sent chats yet</p>
+      <% end %>
+    </div>
+
+   
+    <div class="bg-gray-50 rounded-lg p-4">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">📨 Received Chats</h2>
+      <% if @received_chats.any? %>
+        <ul class="space-y-2">
+          <% @received_chats.each do |chat| %>
+            <li class="bg-white p-3 rounded border">
+              <%= link_to "Chat with #{chat.sender.first_name}", chat_path(chat), 
+                  class: "text-blue-600 hover:text-blue-900 hover:underline" %>
+              <span class="text-gray-500 text-sm">(ID: <%= chat.id %>)</span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-gray-500 italic">No received chats yet</p>
+      <% end %>
+    </div>
+  </div>
+
+  
+  <div class="bg-gray-50 rounded-lg p-4 mb-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">📝 Sent Messages</h2>
+    <% if @messages.any? %>
+      <ul class="space-y-2">
+        <% @messages.each do |message| %>
+          <li class="bg-white p-3 rounded border">
+            <span class="text-gray-600 text-sm">In chat ID <%= message.chat_id %>:</span>
+            <%= link_to message.body, message_path(message), 
+                class: "text-blue-600 hover:text-blue-900 hover:underline block mt-1" %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-gray-500 italic">No messages sent yet</p>
+    <% end %>
+  </div>
+
+  
+  <div class="flex space-x-4">
+    <% if can? :edit, @user %>
+      <%= link_to "Edit User", edit_user_path(@user),
+          class: "btn-primary text-white px-6 py-2 rounded-lg font-medium" %>
+    <% end %>
+
+    <% if can? :destroy, @user %>
+      <%= button_to "Delete User", user_path(@user),
+          method: :delete,
+          data: { 
+            confirm: "Are you sure you want to delete your account? This action cannot be undone and will delete all your chats and messages.",
+            turbo_confirm: "Are you sure you want to delete your account? This action cannot be undone and will delete all your chats and messages."
+          },
+          class: "bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors duration-200 font-medium" %>
+    <% end %>
+
+    <%= link_to "Back", users_path,
+        class: "bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium" %>
+  </div>
+
+  
+  <% unless can? :edit, @user %>
+    <div class="mt-6 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg">
+      <strong>Note:</strong> You can only view this profile. You don't have permission to edit it.
+    </div>
+  <% end %>
+</div>
